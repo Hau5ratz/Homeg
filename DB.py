@@ -27,9 +27,6 @@ class DBM():
         self.db = db
         with DB(self, self.db):
             self.knownids = self._IDknown()
-            self.CATknown = self._catlearn()
-            self.CUNknown = self._CCknown()
-            self.COMknown = self._COknown()
             self.t = self._namet()
             self.bin1 = dict()
             self.bin2 = dict()
@@ -52,39 +49,14 @@ class DBM():
         return [x[1] for x in self.c]
 
     def update(self, dc):
-        with DB(self, self.db):
-            for key, value in dc.items():
-                t = self.t[0]
-                columns = self.columns(t)
-                values = [int(key), value['URL'], int(time.time())]
-                try:
-                    self._update(t, values)
-                except:
-                    print('_update:')
-                    print(t, values)
-                    print([v[0] for v in dc.values()])
-                    exit()
-                for k, v in value.items():
-                    if k in ['Job ID', 'URL']:
-                        continue
-                    elif k == 'Location':
-                        t = self.t[-2]
-                        # Mac Patch
-                        g = self._gsant(v)
-                        if g:
-                            self._update(t, [key] + g)
-                        else:
-                            self._update(t, [key, 'NO',v,'False', 'False','False'])
-                        # end of mac patch
-                    elif k == 'Catagory':
-                        t = self.t[-3]
-                        self._update(t, [key, self._csant(v)])
-                    elif k == 'Posting date':
-                        t = self.t[-1]
-                        self._update(t, [key, self._tsant(v)])
-                    elif k == 'Company':
-                        t = self.t[3]
-                        self._update(t, [key, self._corpsant(v)])
+        '''
+        I'm actually going to do this iota by iota of conversation
+        SO i should probably have two running versions of update
+        3 versions of update
+        a scribe
+        a meta
+        a session ledger
+        '''
 
                 insert = [int(key),
                           value["Description"],
@@ -153,85 +125,14 @@ class DBM():
 
     # Sanatizers
 
-    def _gsant(self, v):
-        '''
-        Geography Sanatizer
-        '''
-        try:
-            loc = self.geo.geocode(v, addressdetails=True)
-            d = loc.raw
-            ad = d['address']
-            if ad['country_code'] not in self.CUNknown:
-                x = [ad['country_code'], ad['country']]
-                y = self.columns('country')
-                self._update('country', x)
-                self.CUNknown.append(ad['country_code'])
-            pack = []
-            it = ['country_code', 'state', 'state_district',
-                  'county', 'town', 'type']
-            pause = True
-            for x in it:
-                try:
-                    if pause and x == 'state_district':
-                        continue
-                    pack.append(ad[x])
-                except KeyError:
-                    if x == 'state':
-                        pause = False
-                        continue
-                    pack.append('None')
-            return pack
-        except Exception as ex:
-            print("Geocode failed\n")
-            print(ex)
-            return False
-
-    def _corpsant(self, v):
-        if v not in self.COMknown.keys():
-            if self.COMknown.values():
-                n = max(self.COMknown.values()) + 1
-            else:
-                n = 1
-            self._update(self.t[2], [n, v])
-            self.COMknown = self._COknown()
-            self.bin2[v] = n
-            self.COMknown = dict(self.bin2, **self.COMknown)
-        return self.COMknown[v]
-
-    def _csant(self, v):
-        '''
-        Catagory Sanatizer
-        '''
-        self.CATknown = self._catlearn()
-        if v not in self.CATknown.keys():
-            if self.CATknown.values():
-                n = max(self.CATknown.values()) + 1
-            else:
-                n = 1
-            self._update(self.t[1], [n, v])
-            self.CATknown = self._catlearn()
-            self.bin1[v] = n
-            self.CATknown = dict(self.bin1, **self.CATknown)
-        return self.CATknown[v]
-
-    def _tsant(self, v):
-        pattern = 'Posted %B %d, %Y'
-        return int(time.mktime(time.strptime(v, pattern)))
-
     # Data pullers
+    
+    # Just keeping some of these as examples
 
     def _IDknown(self):
         insert = '''
                 SELECT ID
                 FROM active_jobs
-                '''
-        self.c.execute(insert)
-        return [x[0] for x in self.c]
-
-    def _CCknown(self):
-        insert = '''
-                SELECT country_code
-                FROM country
                 '''
         self.c.execute(insert)
         return [x[0] for x in self.c]
