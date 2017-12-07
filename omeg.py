@@ -15,47 +15,40 @@ you to disconnect and quit program
 /next starts a new conversation 
 variable names: 
 hist[uid][stranger\user\collective] 
-''' 
-timer = 0 
-allowance = 30 
-uid = 0
-
-def log(user, pers, text):
-    hist[uid][pers].append(text)
-    hist[uid]['collective'].append(text)
-        
-def out(input_str, verbose=False):
-    global allowance, chats, timer
-    log(uid, 'user', input_str)
-    c.send(input_str.strip())
-    if verbose:
-        print 'timer was at %s'%(time.time()-timer)
-    if input_str.strip():
-        timer = time.time()
-    if verbose:
-        print "Timer reset to %s"%(time.time()-timer)
-                
-    if verbose:
-        print 'Current allowance is %s'%(allowance)
-        
+'''      
 class Hand(OmegleHandler):
+    
+    def out(self, input_str, verbose=False):
+        global chats
+        log(self.random_id, 'user', input_str)
+        self.send(input_str.strip())
+        if verbose:
+            print 'timer was at %s'%(time.time()-timer)
+        if input_str.strip():
+            timer = time.time()
+        if verbose:
+            print "Timer reset to %s"%(time.time()-timer)
+        if verbose:
+            print 'Current allowance is %s'%(allowance)
+    
+    def log(self, pers, text):
+        hist[self.random_id][pers].append(text)
+        hist[self.random_id]['collective'].append(text)
 
     def connected(self):
-        global upool, hist, uhist, uid, timer
+        global upool, hist, uhist, timer
         os.system('clear')
         print 'You\'re now chatting with a random stranger. Say hi!'
-        while uid in upool:
-            uid = random.randint(100000, 999999)
-        upool.add(uid)
-        hist[uid] = uhist
-        print 'They\'ve been assigned the username: %s'%(uid)
+        upool.add(self.random_id)
+        hist[self.random_id] = uhist
+        print 'They\'ve been assigned the username: %s'%(self.random_id)
         timer = time.time()
 
     def message(self, message):
-        global log, uid, chats, timer
+        global log, chats, timer
         timer = time.time()
-        log(uid, 'stranger', message)
-        print 'Stranger %s: %s' % (uid, message)
+        log(self.random_id , 'stranger', message)
+        print 'Stranger %s: %s' % (self.random_id , message)
         chats += 1
 
 h = Hand(loop=True) # session loop 
@@ -75,7 +68,7 @@ while 1:
         input_str = raw_input('') # string input
         if input_str.strip() == '/next':
             c.next() 
-            chats, timer, uid = 0, time.time(),0
+            chats, timer, time.time(),0
         elif input_str.strip() == '/exit':
             c.disconnect() # disconnect chat session break
             exit() 
