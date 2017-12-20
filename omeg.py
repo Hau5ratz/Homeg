@@ -24,7 +24,7 @@ class Hand(OmegleHandler):
 
     def out(self, input_str, verbose=False):
         self.log('user', input_str)
-        self.send(input_str.strip())
+        self.message(input_str.strip())
         if verbose:
             pass  # print 'timer was at %s' % (time.time() - timer)
         if input_str.strip():
