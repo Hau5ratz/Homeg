@@ -3,24 +3,24 @@ import time
 import os
 import random
 import re
-
-
-chats = 0 
-upool = set([0]) 
-uhist = {'stranger':[], 'user':[],'collective':[]} 
-hist = dict() 
-helpt = ''' /h or /help gives 
-you these instructions /exit allows 
-you to disconnect and quit program 
-/next starts a new conversation 
-variable names: 
-hist[uid][stranger\user\collective] 
-'''      
+    
 class Hand(OmegleHandler):
+    def __init__(self):
+        OmegleHandler.Hand.__init__(self)
+        self.chats = 0 
+        self.upool = set([0]) 
+        self.uhist = {'stranger':[], 'user':[],'collective':[]} 
+        self.hist = dict() 
+        self.helpt = ''' /h or /help gives 
+        you these instructions /exit allows 
+        you to disconnect and quit program 
+        /next starts a new conversation 
+        variable names: 
+        hist[uid][stranger\user\collective] 
+        '''  
     
     def out(self, input_str, verbose=False):
-        global chats
-        log(self.random_id, 'user', input_str)
+        self.log(self.random_id, 'user', input_str)
         self.send(input_str.strip())
         if verbose:
             print 'timer was at %s'%(time.time()-timer)
@@ -32,24 +32,22 @@ class Hand(OmegleHandler):
             print 'Current allowance is %s'%(allowance)
     
     def log(self, pers, text):
-        hist[self.random_id][pers].append(text)
-        hist[self.random_id]['collective'].append(text)
+        self.hist[self.random_id][pers].append(text)
+        self.hist[self.random_id]['collective'].append(text)
 
     def connected(self):
-        global upool, hist, uhist, timer
         os.system('clear')
         print 'You\'re now chatting with a random stranger. Say hi!'
-        upool.add(self.random_id)
-        hist[self.random_id] = uhist
+        self.upool.add(self.random_id)
+        self.hist[self.random_id] = uhist
         print 'They\'ve been assigned the username: %s'%(self.random_id)
-        timer = time.time()
+        self.timer = time.time()
 
     def message(self, message):
-        global log, chats, timer
-        timer = time.time()
-        log(self.random_id , 'stranger', message)
+        self.timer = time.time()
+        self.log(self.random_id , 'stranger', message)
         print 'Stranger %s: %s' % (self.random_id , message)
-        chats += 1
+        self.chats += 1
 
 h = Hand(loop=True) # session loop 
 c = OmegleClient(h, wpm=47, lang='en', topics=['politic','political','politics','trump']) 
@@ -71,4 +69,4 @@ while 1:
     elif input_str.strip() == '/verbose':
         verbose=True
     else:
-        out(input_str, verbose)
+        h.out(input_str, verbose)
