@@ -59,22 +59,16 @@ c.start()
 verbose = False
 while 1:
     allowance = 30 + (chats * 10)
-    if (time.time() - timer) >= allowance:
-        c.send('Bot timer up you took %s seconds'%(time.time()-timer))
-        c.send('you were perscribed only %s due to analysed conversational value'%(allowance)) 
+    input_str = raw_input('') # string input
+    if input_str.strip() == '/next':
         c.next() 
-        chats, timer = 0, time.time()
-    else:   
-        input_str = raw_input('') # string input
-        if input_str.strip() == '/next':
-            c.next() 
-            chats, timer, time.time(),0
-        elif input_str.strip() == '/exit':
-            c.disconnect() # disconnect chat session break
-            exit() 
-        elif input_str.strip() in ['/h','/help']:
-            print helpt
-        elif input_str.strip() == '/verbose':
-            verbose=True
-        else:
-            out(input_str, verbose)
+        chats, timer, time.time(),0
+    elif input_str.strip() == '/exit':
+        c.disconnect() # disconnect chat session break
+        exit() 
+    elif input_str.strip() in ['/h','/help']:
+        print helpt
+    elif input_str.strip() == '/verbose':
+        verbose=True
+    else:
+        out(input_str, verbose)
