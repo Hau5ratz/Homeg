@@ -2,8 +2,8 @@ from pyomegle import OmegleClient,OmegleHandler
 import time
 import os
 import random
-import system
-import termois
+import sys
+import select
 import re
     
 class Hand(OmegleHandler):
