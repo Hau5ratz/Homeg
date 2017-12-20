@@ -62,9 +62,7 @@ verbose = False
 while 1:
     
     ready = select.select(read_list, [], [], timeout)[0]
-    if not ready:
-        idle_work()
-    else:
+    if ready:
         for file in ready:
             input_str = file.readline()
         if input_str.strip() == '\next':
