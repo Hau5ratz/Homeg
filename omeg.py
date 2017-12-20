@@ -8,7 +8,7 @@ import re
     
 class Hand(OmegleHandler):
     def __init__(self, *args, **kwargs):
-        OmegleHandler.Hand.__init__(self, *args, **kwargs)
+        OmegleHandler.__init__(self, *args, **kwargs)
         self.chats = 0 
         self.upool = set([0]) 
         self.uhist = {'stranger':[], 'user':[],'collective':[]} 
