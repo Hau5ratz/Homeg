@@ -23,7 +23,7 @@ class Hand(OmegleHandler):
                      '''
 
     def out(self, input_str, verbose=False):
-        self.log(self.random_id, 'user', input_str)
+        self.log('user', input_str)
         self.send(input_str.strip())
         if verbose:
             pass  # print 'timer was at %s' % (time.time() - timer)
@@ -49,7 +49,7 @@ class Hand(OmegleHandler):
 
     def message(self, message):
         self.timer = time.time()
-        self.log(self.random_id, 'stranger', message)
+        self.log('stranger', message)
         print '\nStranger %s: %s' % (self.random_id, message)
         self.chats += 1
 
