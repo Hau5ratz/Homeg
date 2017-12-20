@@ -49,6 +49,7 @@ class Hand(OmegleHandler):
         self.upool.add(self.random_id)
         self.hist[self.random_id] = self.uhist
         print 'They\'ve been assigned the username: %s' % (self.random_id)
+        self.out('Hey political orientation?')
 
     def message(self, message):
         self.timer = time.time()
@@ -68,6 +69,7 @@ read_list = [sys.stdin]
 timeout = 0.1  # seconds
 verbose = False
 while 1:
+    if 
     ready = select.select(read_list, [], [], timeout)[0]
     if ready:
         for file in ready:
