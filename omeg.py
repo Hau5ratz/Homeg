@@ -7,7 +7,7 @@ import select
 import re
     
 class Hand(OmegleHandler):
-    def __init__(self):
+    def __init__(self, *args, **kwargs):
         OmegleHandler.Hand.__init__(self)
         self.chats = 0 
         self.upool = set([0]) 
