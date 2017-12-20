@@ -69,7 +69,6 @@ read_list = [sys.stdin]
 timeout = 0.1  # seconds
 verbose = False
 while 1:
-    if 
     ready = select.select(read_list, [], [], timeout)[0]
     if ready:
         for file in ready:
