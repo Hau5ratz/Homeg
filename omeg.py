@@ -2,6 +2,8 @@ from pyomegle import OmegleClient,OmegleHandler
 import time
 import os
 import random
+import system
+import termois
 import re
     
 class Hand(OmegleHandler):
@@ -46,8 +48,7 @@ class Hand(OmegleHandler):
     def message(self, message):
         self.timer = time.time()
         self.log(self.random_id , 'stranger', message)
-        print 'Stranger %s: %s' % (self.random_id , message)
-        
+        print '\nStranger %s: %s' % (self.random_id , message)
         self.chats += 1
 
 h = Hand(loop=True) # session loop 
@@ -55,19 +56,26 @@ c = OmegleClient(h, wpm=47, lang='en', topics=['politic','political','politics',
 # 47 words per minute 
 c.start() 
 
+read_list = [sys.stdin]
+timeout = 0.1 # seconds
 verbose = False
 while 1:
-    allowance = 30 + (chats * 10)
-    input_str = raw_input('') # string input
-    if input_str.strip() == '\next':
-        c.next() 
-        chats, timer, time.time(),0
-    elif input_str.strip() == '\exit':
-        c.disconnect() # disconnect chat session break
-        exit() 
-    elif input_str.strip() in ['\h','\help']:
-        print helpt
-    elif input_str.strip() == '\verbose':
-        verbose=True
+    
+    ready = select.select(read_list, [], [], timeout)[0]
+    if not ready:
+        idle_work()
     else:
-        h.out(input_str, verbose)
+        for file in ready:
+            input_str = file.readline()
+        if input_str.strip() == '\next':
+            c.next() 
+            chats, timer, time.time(),0
+        elif input_str.strip() == '\exit':
+            c.disconnect() # disconnect chat session break
+            exit() 
+        elif input_str.strip() in ['\h','\help']:
+            print helpt
+        elif input_str.strip() == '\verbose':
+            verbose=True
+        else:
+            h.out(input_str, verbose)
