@@ -44,9 +44,8 @@ class Hand(OmegleHandler):
         while self.random_id in self.upool:
             self.random_id = random.randint(100000, 999999)
         self.upool.add(self.random_id)
-        self.hist[self.random_id] = uhist
+        self.hist[self.random_id] = self.uhist
         print 'They\'ve been assigned the username: %s' % (self.random_id)
-        self.timer = time.time()
 
     def message(self, message):
         self.timer = time.time()
