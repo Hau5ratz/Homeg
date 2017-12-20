@@ -12,6 +12,7 @@ class Hand(OmegleHandler):
         self.random_id = 0
         self.chats = 0
         self.upool = set([0])
+        self.client = 0
         self.uhist = {'stranger': [], 'user': [], 'collective': []}
         self.hist = dict()
         self.helpt = ''' /h or /help gives
@@ -24,7 +25,7 @@ class Hand(OmegleHandler):
 
     def out(self, input_str, verbose=False):
         self.log('user', input_str)
-        self.message(input_str.strip())
+        self.client.send(input_str.strip())
         if verbose:
             pass  # print 'timer was at %s' % (time.time() - timer)
         if input_str.strip():
@@ -33,6 +34,9 @@ class Hand(OmegleHandler):
             pass  # print "Timer reset to %s" % (time.time() - timer)
         if verbose:
             pass
+        
+    def client(self, c):
+        self.client = c
 
     def log(self, pers, text):
         self.hist[self.random_id][pers].append(text)
@@ -59,6 +63,7 @@ c = OmegleClient(h, wpm=47, lang='en', topics=[
                  'politic', 'political', 'politics', 'trump'])
 # 47 words per minute
 c.start()
+h.client(c)
 
 read_list = [sys.stdin]
 timeout = 0.1  # seconds
