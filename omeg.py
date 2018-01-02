@@ -4,6 +4,16 @@ import os
 import random
 import sys
 import select
+from Spellchecker import correction
+import nltk
+
+'''
+something something text something something
+code something something
+text something something
+control alt delete something or other complete filler
+
+'''
 
 class Hand(OmegleHandler):
     def __init__(self, *args, **kwargs):
@@ -85,4 +95,4 @@ while 1:
         elif input_str.strip() == '\\verbose':
             verbose = True
         else:
-            h.out(input_str, verbose)
+            h.out(correction(input_str), verbose)
