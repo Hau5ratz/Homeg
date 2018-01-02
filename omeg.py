@@ -5,7 +5,6 @@ import random
 import sys
 import select
 
-
 class Hand(OmegleHandler):
     def __init__(self, *args, **kwargs):
         OmegleHandler.__init__(self, *args, **kwargs)
@@ -49,6 +48,10 @@ class Hand(OmegleHandler):
         self.upool.add(self.random_id)
         self.hist[self.random_id] = self.uhist
         print 'They\'ve been assigned the username: %s' % (self.random_id)
+        
+        # Opening message
+        ###################
+        self.out('Hey political orientation?')
 
     def message(self, message):
         self.timer = time.time()
