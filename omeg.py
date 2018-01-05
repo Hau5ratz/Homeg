@@ -51,7 +51,7 @@ class Hand(OmegleHandler):
         
         # Opening message
         ###################
-        self.out('Hey political orientation?')
+        self.out('Hey what political ideology would you say you identify with?')
 
     def message(self, message):
         self.timer = time.time()
