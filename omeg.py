@@ -108,7 +108,7 @@ while 1:
         elif input_str.strip() in ['\\h', '\\help']:
             print helpt
         elif '\\t' in input_str.strip():
-            h.tout = int(''.join([x for x in input_str.strip() if x.isdigit()])
+            h.tout = int(''.join([x for x in input_str.strip() if x.isdigit()]))
         elif input_str.strip() == '\\verbose':
             verbose = True
         else:
