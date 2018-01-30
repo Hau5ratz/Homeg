@@ -4,14 +4,22 @@ import os
 import random
 import sys
 import select
+import pickle
+import os
 
 class Hand(OmegleHandler):
     def __init__(self, *args, **kwargs):
         OmegleHandler.__init__(self, *args, **kwargs)
+        if not os.path.isdir('./data'):
+            os.mkdir('./data')   
+        if not os.path.isfile('./data/chats'):
+            self.uhist = {'stranger': [], 'user': [], 'collective': []}  
+        else:
+            with open('chats', 'rb') as handle:
+                self.uhist = pickle.load(handle)
         self.random_id = 0
         self.chats = 0
         self.upool = set([0])
-        self.uhist = {'stranger': [], 'user': [], 'collective': []}
         self.hist = dict()
         self.helpt = ''' /h or /help gives
                      you these instructions /exit allows
@@ -78,6 +86,8 @@ while 1:
         if input_str.strip() == '\\next':
             c.next()
         elif input_str.strip() == '\\exit':
+            with open('chats', 'wb') as handle:
+                pickle.dump(self.uhist, handle)
             c.disconnect()  # disconnect chat session break
             exit()
         elif input_str.strip() in ['\\h', '\\help']:
