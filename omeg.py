@@ -65,7 +65,7 @@ class Hand(OmegleHandler):
         # Opening message
         ###################
         self.out('Mod: Hey what political ideology would you say you identify with?')
-        self.pool.map(self.timer)
+        self.pool.map(self.timer, [self.tout])
         self.pool.close
 
     def message(self, message):
@@ -74,10 +74,10 @@ class Hand(OmegleHandler):
         print '\nStranger %s: %s' % (self.random_id, message)
         self.chats += 1
 
-    def timer(self):
+    def timer(self, tout):
         t = time.time()
         while not self.hist[self.random_id]['stranger']:
-           if int(time.time - t) >= self.tout:
+           if int(time.time - t) >= tout:
                self.out("Mod: *Notice* you have timed out stop wasting people's time")
                self.c.next()
                
