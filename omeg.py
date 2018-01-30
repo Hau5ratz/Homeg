@@ -102,7 +102,7 @@ while 1:
     print 'at raw'
     input_str = raw_input()
     if input_str.strip() == '\\next':
-        self.on = False
+        h.on = False
         c.next()
     elif input_str.strip() == '\\exit':
         with open('chats', 'wb') as handle:
