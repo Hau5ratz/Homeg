@@ -82,7 +82,7 @@ class Hand(OmegleHandler):
         while not self.hist[self.random_id]['stranger']:
            if int(time.time()) - int(t) >= tout:
                self.out("Mod: *Notice* you have timed out stop wasting people's time")
-               self.c.next()
+               self.client.next()
                
      
 print 'loading objects'
