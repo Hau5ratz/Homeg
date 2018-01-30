@@ -26,6 +26,7 @@ class Hand(OmegleHandler):
         self.chats = 0
         self.pool = ThreadPool(1) 
         self.tout = 15
+        self.on = False
         self.hist = dict()
         self.helpt = ''' /h or /help gives
                      you these instructions /exit allows
@@ -56,6 +57,7 @@ class Hand(OmegleHandler):
 
     def connected(self):
         os.system('clear')
+        self.on = True
         print 'You\'re now chatting with a random stranger. Say hi!'
         while self.random_id in self.upool:
             self.random_id = random.randint(100000, 999999)
@@ -95,9 +97,12 @@ print 'running program'
 read_list = [sys.stdin]
 timeout = 0.1  # seconds
 verbose = False
+print 'before loop'
 while 1:
+    print 'at raw'
     input_str = raw_input()
     if input_str.strip() == '\\next':
+        self.on = False
         c.next()
     elif input_str.strip() == '\\exit':
         with open('chats', 'wb') as handle:
@@ -111,4 +116,5 @@ while 1:
     elif input_str.strip() == '\\verbose':
         verbose = True
     else:
-        h.out(input_str, verbose)
+        if self.on == True:
+            h.out(input_str, verbose)
