@@ -36,7 +36,7 @@ class Hand(OmegleHandler):
 
     def out(self, input_str, verbose=False):
         self.log('user', input_str)
-        self.send(input_str.strip())
+        self.client.send(input_str.strip())
         if verbose:
             pass  # print 'timer was at %s' % (time.time() - timer)
         if input_str.strip():
@@ -47,7 +47,6 @@ class Hand(OmegleHandler):
             pass
         
     def client(self, c):
-        self.send = c.send
         self.client = c
 
     def log(self, pers, text):
