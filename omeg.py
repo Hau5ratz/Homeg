@@ -20,6 +20,7 @@ class Hand(OmegleHandler):
                 self.hist = pickle.load(handle)
         self.uhist = {'stranger': [], 'user': [], 'collective': []}
         self.upool = set([0])
+        self.random_id = 0
         while self.random_id in self.upool:
             self.random_id = random.randint(100000, 999999)
         self.chats = 0
