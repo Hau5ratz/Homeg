@@ -1,6 +1,6 @@
 from pyomegle import OmegleClient, OmegleHandler
 import time
-import threading
+from multiprocessing.dummy import Pool as ThreadPool 
 import os
 import random
 import sys
@@ -21,6 +21,7 @@ class Hand(OmegleHandler):
         self.uhist = {'stranger': [], 'user': [], 'collective': []}  
         self.random_id = 0
         self.chats = 0
+        self.pool = ThreadPool(1) 
         self.client = ''
         self.upool = set([0])
         self.tout = 15
@@ -65,7 +66,8 @@ class Hand(OmegleHandler):
         # Opening message
         ###################
         self.out('Mod: Hey what political ideology would you say you identify with?')
-        self.timer()
+        self.pool.map(self.timer)
+        self.pool.close
 
     def message(self, message):
         self.timer = time.time()
@@ -75,7 +77,7 @@ class Hand(OmegleHandler):
 
     def timer(self)
         t = time.time()
-        while self.chats == 0:
+        while not self.hist[self.random_id]['stranger']:
            if int(time.time - t) >= self.tout:
                self.out("Mod: *Notice* you have timed out stop wasting people's time")
                self.c.next()
