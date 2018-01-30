@@ -1,6 +1,6 @@
 from pyomegle import OmegleClient, OmegleHandler
 import time
-from multiprocessing.dummy import Pool as ThreadPool 
+from threading import Thread
 import os
 import random
 import sys
@@ -24,7 +24,7 @@ class Hand(OmegleHandler):
         while self.random_id in self.upool:
             self.random_id = random.randint(100000, 999999)
         self.chats = 0
-        self.pool = ThreadPool(1) 
+        self.pool = []
         self.tout = 15
         self.on = False
         self.hist = dict()
@@ -68,8 +68,8 @@ class Hand(OmegleHandler):
         # Opening message
         ###################
         self.out('Mod: Hey what political ideology would you say you identify with?')
-        self.pool.map(self.timer, [self.tout])
-        self.pool.close
+        self.pool = Thread(target=self.timer))
+        self.pool.start()
 
     def message(self, message):
         self.timer = time.time()
