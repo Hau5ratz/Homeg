@@ -67,22 +67,18 @@ c = OmegleClient(h, wpm=47, lang='en', topics=[
 c.start()
 h.client(c)
 
-read_list = [sys.stdin]
 timeout = 0.1  # seconds
 verbose = False
 while 1:
-    ready = select.select(read_list, [], [], timeout)[0]
-    if ready:
-        for file in ready:
-            input_str = file.readline()
-        if input_str.strip() == '\\next':
-            c.next()
-        elif input_str.strip() == '\\exit':
-            c.disconnect()  # disconnect chat session break
-            exit()
-        elif input_str.strip() in ['\\h', '\\help']:
-            print helpt
-        elif input_str.strip() == '\\verbose':
-            verbose = True
-        else:
-            h.out(input_str, verbose)
+    input_str = raw_input()
+    if input_str.strip() == '\\next':
+        c.next()
+    elif input_str.strip() == '\\exit':
+        c.disconnect()  # disconnect chat session break
+        exit()
+    elif input_str.strip() in ['\\h', '\\help']:
+        print helpt
+    elif input_str.strip() == '\\verbose':
+        verbose = True
+    else:
+        h.out(input_str, verbose)
