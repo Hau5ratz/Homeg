@@ -1,5 +1,6 @@
 from pyomegle import OmegleClient, OmegleHandler
 import time
+import threading
 import os
 import random
 import sys
@@ -13,13 +14,16 @@ class Hand(OmegleHandler):
         if not os.path.isdir('./data'):
             os.mkdir('./data')   
         if not os.path.isfile('./data/chats'):
-            self.uhist = {'stranger': [], 'user': [], 'collective': []}  
+            self.hist = dict()
         else:
             with open('chats', 'rb') as handle:
-                self.uhist = pickle.load(handle)
+                self.hist = pickle.load(handle)
+        self.uhist = {'stranger': [], 'user': [], 'collective': []}  
         self.random_id = 0
         self.chats = 0
+        self.client = ''
         self.upool = set([0])
+        self.tout = 15
         self.hist = dict()
         self.helpt = ''' /h or /help gives
                      you these instructions /exit allows
@@ -43,6 +47,7 @@ class Hand(OmegleHandler):
         
     def client(self, c):
         self.send = c.send
+        self.client = c
 
     def log(self, pers, text):
         self.hist[self.random_id][pers].append(text)
@@ -59,7 +64,8 @@ class Hand(OmegleHandler):
         
         # Opening message
         ###################
-        self.out('Hey what political ideology would you say you identify with?')
+        self.out('Mod: Hey what political ideology would you say you identify with?')
+        self.timer()
 
     def message(self, message):
         self.timer = time.time()
@@ -67,6 +73,14 @@ class Hand(OmegleHandler):
         print '\nStranger %s: %s' % (self.random_id, message)
         self.chats += 1
 
+    def timer(self)
+        t = time.time()
+        while self.chats == 0:
+           if int(time.time - t) >= self.tout:
+               self.out("Mod: *Notice* you have timed out stop wasting people's time")
+               self.c.next()
+               
+     
 
 h = Hand(loop=True)  # session loop
 c = OmegleClient(h, wpm=47, lang='en', topics=[
@@ -74,7 +88,6 @@ c = OmegleClient(h, wpm=47, lang='en', topics=[
 # 47 words per minute
 c.start()
 h.client(c)
-
 read_list = [sys.stdin]
 timeout = 0.1  # seconds
 verbose = False
@@ -87,11 +100,13 @@ while 1:
             c.next()
         elif input_str.strip() == '\\exit':
             with open('chats', 'wb') as handle:
-                pickle.dump(self.uhist, handle)
+                pickle.dump(self.hist, handle)
             c.disconnect()  # disconnect chat session break
             exit()
         elif input_str.strip() in ['\\h', '\\help']:
             print helpt
+        elif '\\t' in input_str.strip()
+            h.tout = int(''.join([x for x in input_str.strip() if x.isdigit()])
         elif input_str.strip() == '\\verbose':
             verbose = True
         else:
