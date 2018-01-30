@@ -22,7 +22,6 @@ class Hand(OmegleHandler):
         self.random_id = 0
         self.chats = 0
         self.pool = ThreadPool(1) 
-        self.client = ''
         self.upool = set([0])
         self.tout = 15
         self.hist = dict()
