@@ -116,5 +116,5 @@ while 1:
     elif input_str.strip() == '\\verbose':
         verbose = True
     else:
-        if self.on == True:
+        if h.on == True:
             h.out(input_str, verbose)
