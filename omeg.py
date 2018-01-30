@@ -68,7 +68,7 @@ class Hand(OmegleHandler):
         # Opening message
         ###################
         self.out('Mod: Hey what political ideology would you say you identify with?')
-        self.pool = Thread(target=self.timer))
+        self.pool = Thread(target=self.timer)
         self.pool.start()
 
     def message(self, message):
