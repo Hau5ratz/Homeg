@@ -18,11 +18,12 @@ class Hand(OmegleHandler):
         else:
             with open('chats', 'rb') as handle:
                 self.hist = pickle.load(handle)
-        self.uhist = {'stranger': [], 'user': [], 'collective': []}  
-        self.random_id = 0
+        self.uhist = {'stranger': [], 'user': [], 'collective': []}
+        self.upool = set([0])
+        while self.random_id in self.upool:
+            self.random_id = random.randint(100000, 999999)
         self.chats = 0
         self.pool = ThreadPool(1) 
-        self.upool = set([0])
         self.tout = 15
         self.hist = dict()
         self.helpt = ''' /h or /help gives
