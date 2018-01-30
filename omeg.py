@@ -78,7 +78,7 @@ class Hand(OmegleHandler):
     def timer(self, tout):
         t = time.time()
         while not self.hist[self.random_id]['stranger']:
-           if int(time.time - t) >= tout:
+           if int(time.time) - int(t) >= tout:
                self.out("Mod: *Notice* you have timed out stop wasting people's time")
                self.c.next()
                
