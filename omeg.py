@@ -101,7 +101,7 @@ while 1:
             c.next()
         elif input_str.strip() == '\\exit':
             with open('chats', 'wb') as handle:
-                pickle.dump(self.hist, handle)
+                pickle.dump(h.hist, handle)
             c.disconnect()  # disconnect chat session break
             exit()
         elif input_str.strip() in ['\\h', '\\help']:
