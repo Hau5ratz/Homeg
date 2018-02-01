@@ -72,7 +72,7 @@ class Hand(OmegleHandler):
         self.pool.start()
 
     def message(self, message):
-        self.timer = time.time()
+        self.time = time.time()
         self.log('stranger', message)
         print '\nStranger %s: %s' % (self.random_id, message)
         self.chats += 1
