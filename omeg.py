@@ -83,6 +83,7 @@ class Hand(OmegleHandler):
            if int(time.time()) - int(t) >= tout:
                self.out("Mod: *Notice* you have timed out stop wasting people's time")
                self.client.next()
+               break
                
      
 print 'loading objects'
