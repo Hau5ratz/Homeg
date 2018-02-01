@@ -84,6 +84,8 @@ class Hand(OmegleHandler):
                self.out("Mod: *Notice* you have timed out stop wasting people's time")
                self.client.next()
                break
+           if self.chats >= 1:
+               break
                
      
 print 'loading objects'
