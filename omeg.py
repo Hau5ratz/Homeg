@@ -77,10 +77,10 @@ class Hand(OmegleHandler):
         print '\nStranger %s: %s' % (self.random_id, message)
         self.chats += 1
 
-    def timer(self, tout):
+    def timer(self):
         t = time.time()
         while not self.hist[self.random_id]['stranger']:
-           if int(time.time()) - int(t) >= tout:
+           if int(time.time()) - int(t) >= self.tout:
                self.out("Mod: *Notice* you have timed out stop wasting people's time")
                self.client.next()
                break
