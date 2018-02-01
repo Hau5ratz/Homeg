@@ -102,7 +102,6 @@ timeout = 0.1  # seconds
 verbose = False
 print 'before loop'
 while 1:
-    print 'at raw'
     input_str = raw_input()
     if input_str.strip() == '\\next':
         h.on = False
