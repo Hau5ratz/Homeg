@@ -79,9 +79,11 @@ class Hand(OmegleHandler):
         self.chats += 1
 
     def timer(self):
+        print('service: timer started')
         t = time.time()
         while not self.hist[self.random_id]['stranger']:
            if self.chats >= 1:
+               print('service: evade disengage')
                break
            elif int(time.time()) - int(t) >= self.tout:
                self.out("Mod: *Notice* you have timed out stop wasting people's time")
@@ -103,7 +105,6 @@ print 'running program'
 read_list = [sys.stdin]
 timeout = 0.1  # seconds
 verbose = False
-print 'before loop'
 while 1:
     input_str = raw_input()
     if input_str.strip() == '\\next':
