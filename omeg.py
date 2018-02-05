@@ -90,6 +90,7 @@ class Hand(OmegleHandler):
                self.client.next()
                self.chats = 0
                break
+        print('service: evade disengaged')
 
                
      
