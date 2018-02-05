@@ -79,18 +79,18 @@ class Hand(OmegleHandler):
         self.chats += 1
 
     def timer(self):
-        print('service: timer started')
+        print('service: timer started\n')
         t = time.time()
         while self.chats == 0:
            if self.chats >= 1:
-               print('service: evade disengage')
+               print('service: evade disengage\n')
                break
            elif int(time.time()) - int(t) >= self.tout:
                self.out("Mod: *Notice* you have timed out stop wasting people's time")
                self.client.next()
                self.chats = 0
                break
-        print('service: evade disengaged')
+        print('service: evade disengaged\n')
 
                
      
