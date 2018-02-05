@@ -58,6 +58,7 @@ class Hand(OmegleHandler):
     def connected(self):
         os.system('clear')
         self.on = True
+        self.chats = 0
         print 'You\'re now chatting with a random stranger. Say hi!'
         while self.random_id in self.upool:
             self.random_id = random.randint(100000, 999999)
