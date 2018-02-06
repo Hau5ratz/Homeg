@@ -55,7 +55,7 @@ class Hand(OmegleHandler):
 
     def log(self, pers, text):
         self.hist[self.random_id][pers].append(text)
-        self.hist[self.random_id]['collective'].append(text)
+        self.hist[self.random_id]['collective'].append(pers+': "+text)
 
     def connected(self):
         os.system('clear')
