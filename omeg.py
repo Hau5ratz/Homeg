@@ -1,17 +1,32 @@
 from pyomegle import OmegleClient, OmegleHandler
 import time
+from threading import Thread
 import os
 import random
 import sys
 import select
+import pickle
+import os
 
 class Hand(OmegleHandler):
     def __init__(self, *args, **kwargs):
         OmegleHandler.__init__(self, *args, **kwargs)
-        self.random_id = 0
-        self.chats = 0
-        self.upool = set([0])
+        if not os.path.isdir('./data'):
+            os.mkdir('./data')   
+        if not os.path.isfile('./data/chats'):
+            self.hist = dict()
+        else:
+            with open('chats', 'rb') as handle:
+                self.hist = pickle.load(handle)
         self.uhist = {'stranger': [], 'user': [], 'collective': []}
+        self.upool = set([0])
+        self.random_id = 0
+        while self.random_id in self.upool:
+            self.random_id = random.randint(100000, 999999)
+        self.chats = 0
+        self.pool = []
+        self.tout = 15
+        self.on = False
         self.hist = dict()
         self.helpt = ''' /h or /help gives
                      you these instructions /exit allows
@@ -23,7 +38,7 @@ class Hand(OmegleHandler):
 
     def out(self, input_str, verbose=False):
         self.log('user', input_str)
-        self.send(input_str.strip())
+        self.client.send(input_str.strip())
         if verbose:
             pass  # print 'timer was at %s' % (time.time() - timer)
         if input_str.strip():
@@ -34,7 +49,7 @@ class Hand(OmegleHandler):
             pass
         
     def client(self, c):
-        self.send = c.send
+        self.client = c
 
     def log(self, pers, text):
         self.hist[self.random_id][pers].append(text)
@@ -42,6 +57,8 @@ class Hand(OmegleHandler):
 
     def connected(self):
         os.system('clear')
+        self.on = True
+        self.chats = 0
         print 'You\'re now chatting with a random stranger. Say hi!'
         while self.random_id in self.upool:
             self.random_id = random.randint(100000, 999999)
@@ -51,34 +68,58 @@ class Hand(OmegleHandler):
         
         # Opening message
         ###################
-        self.out('Hey what political ideology would you say you identify with?')
+        self.out('Mod: Hey what political ideology would you say you identify with?')
+        self.pool = Thread(target=self.timer)
+        self.pool.start()
 
     def message(self, message):
-        self.timer = time.time()
+        self.time = time.time()
         self.log('stranger', message)
         print '\nStranger %s: %s' % (self.random_id, message)
         self.chats += 1
 
+    def timer(self):
+        print('service: timer started\n')
+        t = time.time()
+        while self.chats == 0:
+           if self.chats >= 1:
+               print('service: evade disengage\n')
+               break
+           elif int(time.time()) - int(t) >= self.tout:
+               self.out("Mod: *Notice* you have timed out stop wasting people's time")
+               self.client.next()
+               self.chats = 0
+               break
+        print('service: evade disengaged\n')
 
+               
+     
+print 'loading objects'
 h = Hand(loop=True)  # session loop
 c = OmegleClient(h, wpm=47, lang='en', topics=[
                  'politic', 'political', 'politics', 'trump'])
 # 47 words per minute
+print 'initializing objects'
 c.start()
 h.client(c)
-
 timeout = 0.1  # seconds
 verbose = False
 while 1:
     input_str = raw_input()
     if input_str.strip() == '\\next':
+        h.on = False
         c.next()
     elif input_str.strip() == '\\exit':
+        with open('chats', 'wb') as handle:
+            pickle.dump(h.hist, handle)
         c.disconnect()  # disconnect chat session break
         exit()
     elif input_str.strip() in ['\\h', '\\help']:
         print helpt
+    elif '\\t' in input_str.strip():
+        h.tout = int(''.join([x for x in input_str.strip() if x.isdigit()]))
     elif input_str.strip() == '\\verbose':
         verbose = True
     else:
-        h.out(input_str, verbose)
+        if h.on == True:
+            h.out(input_str, verbose)
