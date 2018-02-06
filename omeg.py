@@ -102,8 +102,6 @@ c = OmegleClient(h, wpm=47, lang='en', topics=[
 print 'initializing objects'
 c.start()
 h.client(c)
-print 'running program'
-read_list = [sys.stdin]
 timeout = 0.1  # seconds
 verbose = False
 while 1:
