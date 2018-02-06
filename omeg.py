@@ -25,6 +25,8 @@ class Hand(OmegleHandler):
             self.random_id = random.randint(100000, 999999)
         self.chats = 0
         self.pool = []
+        self.opener = 'Hello there, what political ideology would you say would best describe your own?'
+        self.verbose = False
         self.tout = 15
         self.on = False
         self.hist = dict()
@@ -68,7 +70,7 @@ class Hand(OmegleHandler):
         
         # Opening message
         ###################
-        self.out('Mod: Hey what political ideology would you say you identify with?')
+        self.out(self.opener)
         self.pool = Thread(target=self.timer)
         self.pool.start()
 
@@ -79,27 +81,33 @@ class Hand(OmegleHandler):
         self.chats += 1
 
     def timer(self):
-        print('service: timer started\n')
+        if self.verbose:
+            print('Service: timer started\n')
         t = time.time()
         while self.chats == 0:
            if self.chats >= 1:
-               print('service: evade disengage\n')
                break
            elif int(time.time()) - int(t) >= self.tout:
                self.out("Mod: *Notice* you have timed out stop wasting people's time")
                self.client.next()
                self.chats = 0
                break
-        print('service: evade disengaged\n')
+        if self.verbose:
+            print('Service: evade disengaged\n')
 
-               
-     
-print 'loading objects'
+def xin(inp):
+    val, rec = '', False
+    for char in inp:
+        if rec:
+            val += char
+        elif char == ' ':
+            rec = True
+    return val
+
 h = Hand(loop=True)  # session loop
 c = OmegleClient(h, wpm=47, lang='en', topics=[
                  'politic', 'political', 'politics', 'trump'])
 # 47 words per minute
-print 'initializing objects'
 c.start()
 h.client(c)
 timeout = 0.1  # seconds
@@ -116,10 +124,12 @@ while 1:
         exit()
     elif input_str.strip() in ['\\h', '\\help']:
         print helpt
-    elif '\\t' in input_str.strip():
+    elif input_str.strip() in ['\\timer', '\\t']:
         h.tout = int(''.join([x for x in input_str.strip() if x.isdigit()]))
-    elif input_str.strip() == '\\verbose':
-        verbose = True
+    elif input_str.strip() in ['\\verbose', '\\v']:
+        h.verbose = True
+    elif input_str.strip() in ['\\opener', '\\o']:
+        h.opener = xin(input_str.strip())
     else:
         if h.on == True:
             h.out(input_str, verbose)
