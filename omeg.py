@@ -123,7 +123,7 @@ while 1:
         c.disconnect()  # disconnect chat session break
         exit()
     elif input_str.strip() in ['\\h', '\\help']:
-        print helpt
+        print h.helpt
     elif input_str.strip() in ['\\timer', '\\t']:
         h.tout = int(''.join([x for x in input_str.strip() if x.isdigit()]))
     elif input_str.strip() in ['\\verbose', '\\v']:
