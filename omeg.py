@@ -88,7 +88,7 @@ class Hand(OmegleHandler):
            if self.chats >= 1:
                break
            elif int(time.time()) - int(t) >= self.tout:
-               self.out("Mod: *Notice* you have timed out stop wasting people's time")
+               self.out("*Notice* you took too long to reply you have timed out")
                self.client.next()
                self.chats = 0
                break
