@@ -130,6 +130,9 @@ while 1:
         h.verbose = True
     elif input_str.strip() in ['\\opener', '\\o']:
         h.opener = xin(input_str.strip())
+    elif input_str.strip() in ['\\spam']:
+        for _ in range(10):
+            h.out(xin(input_str.strip()), verbose)
     else:
         if h.on == True:
             h.out(input_str, verbose)
