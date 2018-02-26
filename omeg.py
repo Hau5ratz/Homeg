@@ -27,7 +27,7 @@ class Hand(OmegleHandler):
         self.pool = []
         self.opener = 'Hello there, what political ideology would you say would best describe your own?'
         self.verbose = False
-        self.tout = 15
+        self.tout = 30
         self.on = False
         self.hist = dict()
         self.helpt = ''' /h or /help gives
