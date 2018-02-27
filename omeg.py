@@ -79,6 +79,13 @@ class Hand(OmegleHandler):
         self.log('stranger', message)
         print '\nStranger %s: %s' % (self.random_id, message)
         self.chats += 1
+        self.analyze(message)
+        
+    def analyze(self, message):
+        if '*their' in message or "they're" in message:
+            self.out('*Notice* Warning you have been flagged for pedantry')
+            self.out("Pedantry is a sign of intellectual insecurity") 
+            self.out("Your attempt to discredit someone through non-relevant attention to detail (probably classist based) only reveals your insecurities about your capacity to think critically and focus on the content" 
 
     def timer(self):
         if self.verbose:
