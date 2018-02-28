@@ -52,6 +52,19 @@ class Hand(OmegleHandler):
         
     def client(self, c):
         self.client = c
+    
+    def captcha_required(self):
+        """ Called when the server asks for captcha """
+        RECAPTCHA_CHALLENGE_URL = 'http://www.google.com/recaptcha/api/challenge?k=%s'
+        url = RECAPTCHA_CHALLENGE_URL % challenge
+        source = self.browser.open(url).read()
+        challenge = recaptcha_challenge_regex.search(source).groups()[0]
+        url = RECAPTCHA_IMAGE_URL % challenge
+
+        print ('Recaptcha required: %s' % url)
+        response = raw_input('Response: ')
+
+        self.omegle.recaptcha(challenge, response)
 
     def log(self, pers, text):
         self.hist[self.random_id][pers].append(text)
