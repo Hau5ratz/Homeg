@@ -55,6 +55,7 @@ class Hand(OmegleHandler):
     
     def captcha_required(self):
         """ Called when the server asks for captcha """
+        global challenge
         RECAPTCHA_CHALLENGE_URL = 'http://www.google.com/recaptcha/api/challenge?k=%s'
         url = RECAPTCHA_CHALLENGE_URL % challenge
         source = self.browser.open(url).read()
