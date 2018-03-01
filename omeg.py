@@ -21,6 +21,7 @@ class Hand(OmegleHandler):
         self.uhist = {'stranger': [], 'user': [], 'collective': []}
         self.upool = set([0])
         self.random_id = 0
+        self.looking = False
         while self.random_id in self.upool:
             self.random_id = random.randint(100000, 999999)
         self.chats = 0
@@ -37,6 +38,16 @@ class Hand(OmegleHandler):
                      variable names:
                      hist[uid][stranger\user\collective]
                      '''
+        
+    def waiting(self):
+        """ Called when we are waiting for a stranger to connect """
+        print ('Looking for someone you can chat with...')
+        self.looking = True
+
+    def connected(self):
+        """ Called when we are connected with a stranger """
+        print ('You\'re now chatting with a random stranger. Say hi!')
+        self.looking = False
 
     def out(self, input_str, verbose=False):
         self.log('user', input_str)
@@ -109,7 +120,7 @@ class Hand(OmegleHandler):
         if self.verbose:
             print('Service: timer started\n')
         t = time.time()
-        while self.chats == 0:
+        while not self.looking:
            if self.chats >= 1:
                break
            elif int(time.time()) - int(t) >= self.tout:
