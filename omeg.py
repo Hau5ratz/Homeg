@@ -149,13 +149,13 @@ while 1:
         exit()
     elif input_str.strip() in ['\\h', '\\help']:
         print h.helpt
-    elif any([if x in input_str.strip() for x in ['\\timer', '\\t']]):
+    elif any([True for x in ['\\timer', '\\t'] if x in input_str.strip()]):
         h.tout = int(''.join([x for x in input_str.strip() if x.isdigit()]))
     elif input_str.strip() in ['\\verbose', '\\v']:
         h.verbose = True
-    elif any([if x in input_str.strip() for x in ['\\opener', '\\o']]):
+    elif any([True for x in ['\\opener', '\\o'] if x in input_str.strip()]):
         h.opener = xin(input_str.strip())
-    elif any([if x in input_str.strip()for x in ['\\spam']]):
+    elif any([True for x in ['\\spam'] if x in input_str.strip()]):
         for _ in range(10):
             h.out(xin(input_str.strip()), verbose)
     else:
