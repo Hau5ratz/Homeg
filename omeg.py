@@ -7,7 +7,6 @@ import random
 import sys
 import select
 import pickle
-import json
 
 class Hand(OmegleHandler):
     def __init__(self, *args, **kwargs):
@@ -114,7 +113,9 @@ class Hand(OmegleHandler):
         url = 'https://od-api.oxforddictionaries.com:443/api/v1/entries/en/%s'
         header = {'app_id': self.app_id, 'app_key': self.app_key}
         r = requests.get(url%word.lower(), headers=header)
-        j = json.dumps(r.json())
+        j = r.json()
+        sauce = j['metadata']['provider']
+        
         
 
     def message(self, message):
