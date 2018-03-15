@@ -162,6 +162,7 @@ while 1:
         print h.helpt
     elif any([True for x in ['\\timer', '\\t'] if x in input_str.strip()]):
         h.tout = int(''.join([x for x in input_str.strip() if x.isdigit()]))
+        print('h.tout set to: %s'%h.tout)
     elif input_str.strip() in ['\\verbose', '\\v']:
         h.verbose = True
     elif any([True for x in ['\\opener', '\\o'] if x in input_str.strip()]):
