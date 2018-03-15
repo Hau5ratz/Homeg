@@ -111,10 +111,11 @@ class Hand(OmegleHandler):
         self.analyze(message)
         
     def analyze(self, message):
-        if any([x in message for x in ['*their', "*they're",'*there', '*your',"*you're", 'the']]):
-            self.out('*Notice* Warning you have been flagged for pedantry')
-            self.out("Pedantry is a sign of intellectual insecurity") 
-            self.out("Your attempt to discredit someone through non-relevant attention to detail (probably classist based) only reveals your insecurities about your capacity to think critically and focus on the content") 
+        if any([x in message for x in ['*their', "*they're",'*there', '*your',"*you're"]]):
+            print('\t\t\t\t\tMessage flagged', end='\r')
+            #self.out('*Notice* Warning you have been flagged for pedantry')
+            #self.out("Pedantry is a sign of intellectual insecurity") 
+            #self.out("Your attempt to discredit someone through non-relevant attention to detail (probably classist based) only reveals your insecurities about your capacity to think critically and focus on the content") 
 
     def timer(self):
         if self.verbose:
