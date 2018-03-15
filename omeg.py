@@ -2,11 +2,12 @@ from pyomegle import OmegleClient, OmegleHandler
 import time
 from threading import Thread
 import os
+import requests
 import random
 import sys
 import select
 import pickle
-import os
+import json
 
 class Hand(OmegleHandler):
     def __init__(self, *args, **kwargs):
@@ -30,6 +31,8 @@ class Hand(OmegleHandler):
         self.verbose = False
         self.tout = 30
         self.on = False
+        self.app_id = 'fb993127'
+        self.app_key = 'ff75e31b321674eb786dd2b2619617ab'
         self.hist = dict()
         self.helpt = ''' /h or /help gives
                      you these instructions /exit allows
@@ -38,6 +41,10 @@ class Hand(OmegleHandler):
                      variable names:
                      hist[uid][stranger\user\collective]
                      '''
+        self.def = '''Source: %s
+                      Word: %s
+                      definition: %s
+                   '''
         
     def waiting(self):
         """ Called when we are waiting for a stranger to connect """
@@ -102,6 +109,13 @@ class Hand(OmegleHandler):
         self.out(self.opener)
         self.pool = Thread(target=self.timer)
         self.pool.start()
+        
+    def define(self, word)
+        url = 'https://od-api.oxforddictionaries.com:443/api/v1/entries/en/%s'
+        header = {'app_id': self.app_id, 'app_key': self.app_key}
+        r = requests.get(url%word.lower(), headers=header)
+        j = json.dumps(r.json())
+        
 
     def message(self, message):
         self.time = time.time()
@@ -176,6 +190,8 @@ while 1:
     elif any([True for x in ['\\spam'] if x in input_str.strip()]):
         for _ in range(100):
             h.out(xin(input_str.strip()), verbose)
+    elif any([True for x in ['\\d'] if x in input_str.strip()]):
+        h.out(h.define(xin(input_str.strip())), verbose)
     else:
         if h.on == True:
             h.out(input_str, verbose)
