@@ -28,7 +28,7 @@ class Hand(OmegleHandler):
         self.pool = []
         self.opener = 'Hello there, what political ideology would you say would best describe your own?'
         self.verbose = False
-        self.tout = 30
+        self.tout = 20
         self.on = False
         self.app_id = 'fb993127'
         self.app_key = 'ff75e31b321674eb786dd2b2619617ab'
