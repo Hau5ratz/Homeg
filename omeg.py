@@ -38,7 +38,7 @@ class Hand(OmegleHandler):
                      you to disconnect and quit program
                      /next starts a new conversation
                      variable names:
-                     hist[uid][stranger\user\collective]
+                     hist[uid][stranger\\user\\collective]
                      '''
         self.def = '''Source: %s
                       Word: %s
