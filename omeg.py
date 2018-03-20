@@ -42,7 +42,7 @@ class Hand(OmegleHandler):
                      '''
         
         
-        self.define = '''Source: %s
+        self.d = '''Source: %s
                       Word: %s
                       definition: %s
                    '''
@@ -111,7 +111,7 @@ class Hand(OmegleHandler):
         self.pool = Thread(target=self.timer)
         self.pool.start()
         
-    def define(self, word)
+    def define(self, word):
         url = 'https://od-api.oxforddictionaries.com:443/api/v1/entries/en/%s'
         header = {'app_id': self.app_id, 'app_key': self.app_key}
         r = requests.get(url%word.lower(), headers=header)
