@@ -141,7 +141,7 @@ class Hand(OmegleHandler):
         if self.verbose:
             print('Service: timer started\n')
         t = time.time()
-        while not self.looking:
+        while True:
            if self.chats >= 1:
                break
            elif int(time.time()) - int(t) >= self.tout:
