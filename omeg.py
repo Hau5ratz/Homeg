@@ -186,7 +186,7 @@ while 1:
         print('h.tout set to: %s'%h.tout)
     elif input_str.strip() in ['\\verbose', '\\v']:
         h.verbose = True
-        print('verbose mode on')
+        print('Service: verbose mode on')
     elif any([True for x in ['\\opener', '\\o'] if x in input_str.strip()]):
         h.opener = xin(input_str.strip())
     elif any([True for x in ['\\spam'] if x in input_str.strip()]):
