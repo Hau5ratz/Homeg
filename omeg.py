@@ -40,7 +40,9 @@ class Hand(OmegleHandler):
                      variable names:
                      hist[uid][stranger\\user\\collective]
                      '''
-        self.def = '''Source: %s
+        
+        
+        self.define = '''Source: %s
                       Word: %s
                       definition: %s
                    '''
