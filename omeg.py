@@ -49,7 +49,7 @@ class Hand(OmegleHandler):
         self.c = '''A communist society is characterized by common ownership of the means of production with free access to the articles of consumption and is classless and stateless, implying the end of the exploitation of labour (source: https://en.wikipedia.org/wiki/Communist_society).
         There is a frequent mis-characterization of countries that appropriate the name of socialism and communism to mascarade as non-facist countries.
         Both German and Italian facists are literally on record as acknowleding state capitalist regiemes (USSR, MAOIST china) as forms of facism (source: https://en.wikipedia.org/wiki/Red_facism). Litterally both the left and right wing are in agreement that there has never been a truely communist country.
-        It's just you, litterally just you are retarded enough to buy into that bullshit idea because you litterally have no idea what you're talking about.''' 
+        It's just you, literally just you are retarded enough to buy into that bullshit idea because you litterally have no idea what you're talking about.''' 
         
     def waiting(self):
         """ Called when we are waiting for a stranger to connect """
