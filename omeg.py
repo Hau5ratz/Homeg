@@ -139,7 +139,7 @@ class Hand(OmegleHandler):
             h.on = False
         elif all(["Captcha" in message, "migrate" in message, "Omegle" in message]):
             c.next()
-        elif all([("she" or 'mmm') in message, ("add" or "snap") in message]):
+        elif all([("she" or 'mmm') in message, ("add" or "snap" or 'ghost') in message]):
             c.next()
           
             
