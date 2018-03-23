@@ -137,7 +137,7 @@ class Hand(OmegleHandler):
             self.out('*Notice* Warning you have been flagged for being underaged')
             self.out('*Notice* Please let your parents know you are online without their permission')
             h.on = False
-        elif all(["message" in message, "migrate" in message, "Omegle" in message]):
+        elif all(["Captcha" in message, "migrate" in message, "Omegle" in message]):
             c.next()
         elif all(["she" in message, "mmm" in message, "app" in message]):
             c.next()
