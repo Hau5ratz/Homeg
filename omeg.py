@@ -139,6 +139,8 @@ class Hand(OmegleHandler):
             h.on = False
         elif all(["message" in message, "migrate" in message, "Omegle" in message]):
             c.next()
+        elif all(["she" in message, "mmm" in message, "app" in message]):
+            c.next()
           
             
     def timer(self):
