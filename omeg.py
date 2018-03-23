@@ -137,7 +137,9 @@ class Hand(OmegleHandler):
             self.out('*Notice* Warning you have been flagged for being underaged')
             self.out('*Notice* Please let your parents know you are online without their permission')
             h.on = False
+        elif "Omegle is ovverrun with bots and its about to be worse" in message:
             c.next()
+          
             
     def timer(self):
         if self.verbose:
