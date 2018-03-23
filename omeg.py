@@ -137,7 +137,7 @@ class Hand(OmegleHandler):
             self.out('*Notice* Warning you have been flagged for being underaged')
             self.out('*Notice* Please let your parents know you are online without their permission')
             h.on = False
-        elif "Omegle is ovverrun with bots and its about to be worse" in message:
+        elif "Help Omegle's community move on by coping this message" in message:
             c.next()
           
             
