@@ -200,7 +200,7 @@ while 1:
     elif any([True for x in ['\\opener', '\\o'] if x in input_str.strip()]):
         h.opener = xin(input_str.strip())
     elif any([True for x in ['\\spam'] if x in input_str.strip()]):
-        for _ in range(100):
+        for _ in range(20):
             h.out(xin(input_str.strip()), verbose)
     elif any([True for x in ['\\d'] if x in input_str.strip()]):
         h.out(h.define(xin(input_str.strip())), verbose)
