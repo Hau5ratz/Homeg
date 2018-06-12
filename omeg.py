@@ -60,6 +60,7 @@ class Hand(OmegleHandler):
         """ Called by the Omegle class for initial additional settings """
         self.omegle = omegle
         self.omegle.browser.set_proxies({"http": "94.75.126.241:8080"})
+        self.omegle.browser.set_handle_robots(False)
 
     def connected(self):
         """ Called when we are connected with a stranger """
