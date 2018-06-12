@@ -55,6 +55,11 @@ class Hand(OmegleHandler):
         """ Called when we are waiting for a stranger to connect """
         print ('Looking for someone you can chat with...')
         self.looking = True
+        
+    def _setup(self, omegle):
+        """ Called by the Omegle class for initial additional settings """
+        self.omegle = omegle
+        self.omegle.browser.set_proxy("1.165.165.94:80","http")
 
     def connected(self):
         """ Called when we are connected with a stranger """
