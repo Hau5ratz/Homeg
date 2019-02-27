@@ -10,7 +10,7 @@ from pyomegle import OmegleClient, OmegleHandler
 """
 
 h = OmegleHandler(loop=True)            # session loop
-c = OmegleClient(h, wpm=47, lang='en', topics=["politics","political","communism","communist", "trump", "maga")  # 47 words per minute
+c = OmegleClient(h, wpm=47, lang='en', topics=["politics","political","communism","communist", "trump", "maga"])  # 47 words per minute
 c.start()
 
 while 1:
